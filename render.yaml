@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: cinder-brain
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k eventlet -w 1 -b 0.0.0.0:$PORT main:app
+    sessionAffinity: true
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
